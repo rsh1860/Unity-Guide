@@ -13,6 +13,7 @@ public class GameDirector : MonoBehaviour
     GameObject distance;
 
     Vector3 position;
+    float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +30,21 @@ public class GameDirector : MonoBehaviour
     {
         float length = this.flag.transform.position.x - this.car.transform.position.x;
         if (length >= 0 && length <= 14.5)
-            this.distance.GetComponent<Text>().text = "목표 지점까지 " + length.ToString("F2") + "m";
-        else if (length > 14.5)
-            SceneManager.LoadScene("GameScene");
-
-        else
         {
-            this.distance.GetComponent<Text>().text = "Game Over!"+ "\nTouch to restart";
+            this.distance.GetComponent<Text>().text = "목표 지점까지 " + length.ToString("F2") + "m";
+            
+        }
+
+        if (length >= 0 && length <= 1)
+        {
+            this.distance.GetComponent<Text>().text = "Game Clear!" + "\nTouch to restart";
+            if (Input.GetMouseButtonDown(0))
+                SceneManager.LoadScene("GameScene");
+        }
+
+        if (length < 0)
+        {
+            this.distance.GetComponent<Text>().text = "Game Over!" + "\nTouch to restart";
             if (Input.GetMouseButtonDown(0))
                 SceneManager.LoadScene("GameScene");
         }
